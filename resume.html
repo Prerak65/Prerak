@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prerakkumar Rathod - Aspiring Computer Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Base styles for body and fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #f0f4f8; /* Light blue-gray for background */
+            color: #334155; /* Slate-700 */
+        }
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #1e293b; /* Slate-900 */
+        }
+
+        /* Video background styling for Hero section */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.5) grayscale(0.1); /* Darken and slightly desaturate for better text readability */
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.8), rgba(15, 23, 42, 0.95)); /* Dark blue gradient overlay */
+            z-index: -1;
+        }
+
+        /* Navbar transitions and active states */
+        .menu-transition {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        .submenu-transition {
+            transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+        }
+        .nav-link-active {
+            color: #0ea5e9; /* sky-500 */
+            font-weight: 600; /* semibold */
+        }
+        .mobile-nav-link-active {
+            background-color: #e0f2fe; /* sky-100 */
+            color: #0ea5e9; /* sky-500 */
+        }
+        .navbar-scrolled {
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Custom scrollbar for aesthetics */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0; /* slate-200 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8; /* slate-400 */
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* slate-500 */
+        }
+
+        /* Scroll Animation Classes */
+        .animate-fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        .animate-fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        .animate-scale-in.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .animate-slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        .animate-slide-in-left.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        .animate-slide-in-right.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Delays for animations */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+        .delay-600 { transition-delay: 0.6s; }
+        .delay-700 { transition-delay: 0.7s; }
+        .delay-800 { transition-delay: 0.8s; }
+        .delay-900 { transition-delay: 0.9s; }
+        .delay-1000 { transition-delay: 1.0s; }
+
+        /* Typing effect for hero text */
+        .typing-effect {
+            overflow: hidden; /* Ensures the text is not visible until typed */
+            white-space: nowrap; /* Keeps the content on a single line */
+            margin: 0 auto; /* Centers the content */
+            letter-spacing: .15em; /* Adjust as needed */
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        /* The typing animation */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white }
+        }
+
+        /* Custom wave divider */
+        .wave-divider {
+            position: relative;
+            height: 100px; /* Adjust height of the wave */
+            width: 100%;
+            background: transparent; /* Background of the section above */
+        }
+        .wave-divider::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100px; /* Same as wave-divider height */
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0 C300,100 800,0 1200,100 L1200,120 L0,120 Z" fill="%23f0f4f8"></path></svg>'); /* Light blue-gray wave */
+            background-size: cover;
+            bottom: 0;
+            left: 0;
+        }
+        .wave-divider.bottom::before {
+            transform: rotate(180deg);
+            top: 0;
+            bottom: unset;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-slate-700">
+
+    <nav id="main-navbar" class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#hero" class="text-3xl font-extrabold text-sky-600 hover:text-sky-700 transition-colors">
+                        Prerak.dev
+                    </a>
+                </div>
+
+                <div id="desktop-nav-links" class="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
+                    <a href="#hero" class="nav-link text-gray-700 hover:text-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                    <a href="#projects" class="nav-link text-gray-700 hover:text-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Projects</a>
+                    <a href="#blog" class="nav-link text-gray-700 hover:text-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Blog</a>
+                    <div class="relative group">
+                        <button class="nav-link-skills text-gray-700 hover:text-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors inline-flex items-center group">
+                            Skills & More
+                            <svg class="ml-1 h-4 w-4 text-gray-500 group-hover:text-sky-600 transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 ease-out transform scale-95 group-hover:scale-100 group-focus-within:scale-100 origin-top-left z-20 invisible group-hover:visible group-focus-within:visible">
+                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <a href="#expertise" class="nav-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-sky-600" role="menuitem">My Expertise</a>
+                                <a href="#skills" class="nav-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-sky-600" role="menuitem">Technical Skills</a>
+                                <a href="#education" class="nav-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-sky-600" role="menuitem">Education</a>
+                                <a href="#languages" class="nav-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-sky-600" role="menuitem">Languages</a>
+                                <a href="#testimonials" class="nav-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-sky-600" role="menuitem">Testimonials</a>
+                                <a href="#learning-goals" class="nav-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-sky-600" role="menuitem">What I'm Learning</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-sky-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                </div>
+
+                <div class="hidden md:block">
+                     <a href="#contact" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-150 ease-in-out text-sm">
+                        Let's Connect
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500" aria-expanded="false" aria-controls="mobile-menu">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="md:hidden hidden overflow-hidden menu-transition max-h-0 opacity-0">
+            <div id="mobile-nav-links" class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#hero" class="mobile-nav-link block text-gray-700 hover:bg-sky-50 hover:text-sky-600 px-3 py-2 rounded-md text-base font-medium transition-colors">Home</a>
+                <a href="#about" class="mobile-nav-link block text-gray-700 hover:bg-sky-50 hover:text-sky-600 px-3 py-2 rounded-md text-base font-medium transition-colors">About</a>
+                <a href="#projects" class="mobile-nav-link block text-gray-700 hover:bg-sky-50 hover:text-sky-600 px-3 py-2 rounded-md text-base font-medium transition-colors">Projects</a>
+                <a href="#blog" class="mobile-nav-link block text-gray-700 hover:bg-sky-50 hover:text-sky-600 px-3 py-2 rounded-md text-base font-medium transition-colors">Blog</a>
+                <div>
+                    <button id="mobile-skills-button" class="mobile-nav-link w-full text-left flex justify-between items-center text-gray-700 hover:bg-sky-50 hover:text-sky-600 px-3 py-2 rounded-md text-base font-medium transition-colors" aria-expanded="false" aria-controls="mobile-skills-submenu">
+                        Skills & More
+                        <svg class="h-5 w-5 transform transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="mobile-skills-submenu" class="pl-3 mt-1 space-y-1 hidden overflow-hidden submenu-transition max-h-0 opacity-0">
+                        <a href="#expertise" class="mobile-nav-link block pl-3 pr-3 py-2 text-gray-600 hover:bg-sky-50 hover:text-sky-500 rounded-md text-sm font-medium transition-colors">My Expertise</a>
+                        <a href="#skills" class="mobile-nav-link block pl-3 pr-3 py-2 text-gray-600 hover:bg-sky-50 hover:text-sky-500 rounded-md text-sm font-medium transition-colors">Technical Skills</a>
+                        <a href="#education" class="mobile-nav-link block pl-3 pr-3 py-2 text-gray-600 hover:bg-sky-50 hover:text-sky-500 rounded-md text-sm font-medium transition-colors">Education</a>
+                        <a href="#languages" class="mobile-nav-link block pl-3 pr-3 py-2 text-gray-600 hover:bg-sky-50 hover:text-sky-500 rounded-md text-sm font-medium transition-colors">Languages</a>
+                        <a href="#testimonials" class="mobile-nav-link block pl-3 pr-3 py-2 text-gray-600 hover:bg-sky-50 hover:text-sky-500 rounded-md text-sm font-medium transition-colors">Testimonials</a>
+                        <a href="#learning-goals" class="mobile-nav-link block pl-3 pr-3 py-2 text-gray-600 hover:bg-sky-50 hover:text-sky-500 rounded-md text-sm font-medium transition-colors">What I'm Learning</a>
+                    </div>
+                </div>
+                <a href="#contact" class="mobile-nav-link block text-gray-700 hover:bg-sky-50 hover:text-sky-600 px-3 py-2 rounded-md text-base font-medium transition-colors">Contact</a>
+            </div>
+            <div class="px-5 py-3">
+                <a href="#contact" class="block w-full text-center bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-150 ease-in-out">
+                    Let's Connect
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="hero" class="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden p-4">
+            <video autoplay muted loop playsinline class="video-background">
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+            <div class="relative z-10 p-6 max-w-5xl mx-auto text-white flex flex-col md:flex-row items-center justify-center gap-8">
+                <div class="flex-shrink-0 mb-6 md:mb-0 animate-scale-in delay-200">
+                    <img src="file:///C:/Users/admin/Downloads/WhatsApp%20Image%202025-05-25%20at%204.39.20.jpeg" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/300x300/0ea5e9/ffffff?text=Prerak';" 
+                         alt="Prerakkumar Rathod's Profile Picture" 
+                         class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-sky-500 shadow-xl object-cover">
+                </div>
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-up text-teal-300">
+                        Hi, I'm Prerakkumar Rathod
+                    </h1>
+                    <p id="typing-text" class="text-xl sm:text-2xl lg:text-3xl font-medium mb-8 typing-effect border-r-4 border-white pr-2">
+                        An Aspiring Computer Engineer
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-up delay-700">
+                        <a href="#contact" class="inline-block bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                            Get In Touch
+                        </a>
+                        <a href="#expertise" class="inline-block border-2 border-sky-600 text-sky-600 bg-white bg-opacity-20 hover:bg-opacity-30 font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                            View My Expertise
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="relative bg-gray-100 py-20">
+            <div class="wave-divider bottom"></div>
+            <div class="container mx-auto p-8 bg-white rounded-lg shadow-xl -mt-20 relative z-10 animate-fade-in-up delay-200">
+                <h2 class="text-4xl font-bold text-center mb-8 text-sky-700">About Me</h2>
+                <div class="max-w-3xl mx-auto text-lg leading-relaxed text-gray-700 text-center animate-fade-in-up delay-300">
+                    <p class="mb-4">
+                        I am an aspiring computer engineering professional with foundational skills in multiple programming languages, including C, C++, Java, PHP, and HTML.
+                    </p>
+                    <p class="mb-4">
+                        I am eager to leverage my prompt engineering abilities to contribute to innovative projects and drive technology forward.
+                    </p>
+                    <p>
+                        I am currently seeking an internship to grow my development expertise and deliver impactful solutions through coding excellence.
+                    </p>
+                </div>
+            </div>
+            <div class="wave-divider"></div>
+        </section>
+
+        <section id="expertise" class="container mx-auto p-8 py-20 bg-white rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">My Expertise & Impact</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-sky-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-start space-x-4 animate-scale-in delay-200">
+                    <div class="text-sky-600 text-3xl mt-1"><i class="fas fa-brain"></i></div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Prompt Engineering</h3>
+                        <p class="text-gray-700">Crafting precise instructions for AI models to generate optimal results and solve complex problems efficiently.</p>
+                    </div>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-start space-x-4 animate-scale-in delay-300">
+                    <div class="text-sky-600 text-3xl mt-1"><i class="fas fa-search"></i></div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Error Finding & Debugging</h3>
+                        <p class="text-gray-700">A keen eye for identifying and resolving software bugs and logical errors, ensuring robust and reliable applications.</p>
+                    </div>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-start space-x-4 animate-scale-in delay-400">
+                    <div class="text-sky-600 text-3xl mt-1"><i class="fas fa-code"></i></div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Technical Language Proficiency</h3>
+                        <p class="text-gray-700">Proficient in foundational programming languages (C, C++, Java, PHP, HTML, Python, SQL), enabling versatile development across various platforms.</p>
+                    </div>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-start space-x-4 animate-scale-in delay-500">
+                    <div class="text-sky-600 text-3xl mt-1"><i class="fas fa-laptop-code"></i></div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Web Development</h3>
+                        <p class="text-gray-700">Building dynamic and responsive web applications from concept to deployment, focusing on user experience and modern web standards.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="container mx-auto p-8 py-20 bg-gray-50 rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-3">Interactive Web Dashboard</h3>
+                    <p class="text-gray-700 mb-4 text-sm">Developed a responsive web application that visualizes data from various sources, improving user engagement and data interpretation.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">HTML</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">CSS</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">JavaScript</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">PHP</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium"><i class="fas fa-link mr-1"></i> Live Demo</a>
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-3">Automated Data Processing Script</h3>
+                    <p class="text-gray-700 mb-4 text-sm">Created a script to automate routine data entry and validation tasks, significantly reducing manual effort and saving hours monthly.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Python</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">PHP</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">SQL</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium"><i class="fas fa-link mr-1"></i> Demo</a>
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-3">Algorithm Visualization Tool</h3>
+                    <p class="text-gray-700 mb-4 text-sm">A simple web-based tool to visualize common sorting and searching algorithms, aiding in understanding data structures.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">HTML</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">CSS</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">JavaScript</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">C++ (logic)</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium"><i class="fas fa-link mr-1"></i> Live Demo</a>
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="container mx-auto p-8 py-20 bg-white rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">Latest Blog Posts</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Understanding Basic Prompt Engineering</h3>
+                    <p class="text-gray-700 text-sm mb-4">A beginner's guide to crafting effective prompts for large language models to get desired outputs.</p>
+                    <span class="text-xs text-gray-500">May 15, 2025</span>
+                    <a href="#" class="block text-sky-600 hover:text-sky-800 font-medium mt-3">Read More <i class="fas fa-arrow-right text-sm ml-1"></i></a>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Debugging Tips for C++ Beginners</h3>
+                    <p class="text-gray-700 text-sm mb-4">Essential strategies and tools to help you find and fix common errors in your C++ code.</p>
+                    <span class="text-xs text-gray-500">April 28, 2025</span>
+                    <a href="#" class="block text-sky-600 hover:text-sky-800 font-medium mt-3">Read More <i class="fas fa-arrow-right text-sm ml-1"></i></a>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-400">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Introduction to Responsive Web Design</h3>
+                    <p class="text-gray-700 text-sm mb-4">Learn the fundamentals of building websites that look great on any device, from desktops to smartphones.</p>
+                    <span class="text-xs text-gray-500">March 10, 2025</span>
+                    <a href="#" class="block text-sky-600 hover:text-sky-800 font-medium mt-3">Read More <i class="fas fa-arrow-right text-sm ml-1"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="container mx-auto p-8 py-20 bg-gray-50 rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">Technical Skills</h2>
+            <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+                <span class="bg-sky-200 text-sky-800 px-5 py-2 rounded-full font-semibold text-lg shadow-sm animate-fade-in-up delay-100">C/C++</span>
+                <span class="bg-sky-200 text-sky-800 px-5 py-2 rounded-full font-semibold text-lg shadow-sm animate-fade-in-up delay-200">HTML</span>
+                <span class="bg-sky-200 text-sky-800 px-5 py-2 rounded-full font-semibold text-lg shadow-sm animate-fade-in-up delay-300">Java</span>
+                <span class="bg-sky-200 text-sky-800 px-5 py-2 rounded-full font-semibold text-lg shadow-sm animate-fade-in-up delay-400">PHP</span>
+                <span class="bg-sky-200 text-sky-800 px-5 py-2 rounded-full font-semibold text-lg shadow-sm animate-fade-in-up delay-500">Python</span>
+                <span class="bg-sky-200 text-sky-800 px-5 py-2 rounded-full font-semibold text-lg shadow-sm animate-fade-in-up delay-600">Prompt Engineering</span>
+                <span class="bg-sky-200 text-sky-800 px-5 py-2 rounded-full font-semibold text-lg shadow-sm animate-fade-in-up delay-700">SQL</span>
+            </div>
+        </section>
+        
+        <section id="education" class="container mx-auto p-8 py-20 bg-white rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">Education</h2>
+            <div class="max-w-2xl mx-auto bg-sky-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
+                <h3 class="text-xl font-semibold text-slate-800 mb-1">Diploma in Computer Engineering</h3>
+                <p class="text-sky-600">Dr.S.&S.S.Gandhi College Of Engineering & Technology</p>
+            </div>
+        </section>
+
+        <section id="testimonials" class="container mx-auto p-8 py-20 bg-gray-50 rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">Testimonials</h2>
+            <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-200">
+                    <p class="italic text-gray-700 mb-4">"Prerakkumar showed exceptional dedication and quickly grasped complex concepts during our project. Their problem-solving skills are truly impressive."</p>
+                    <p class="font-semibold text-slate-800">- Jane Doe, Project Lead</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-fade-in-up delay-300">
+                    <p class="italic text-gray-700 mb-4">"A proactive and eager learner, Prerakkumar's work on data automation was a significant contribution. Highly recommended for any development role."</p>
+                    <p class="font-semibold text-slate-800">- John Smith, Collaborator</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="learning-goals" class="container mx-auto p-8 py-20 bg-white rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">What I'm Learning</h2>
+            <div class="max-w-2xl mx-auto text-center text-lg text-gray-700">
+                <p class="mb-6 animate-fade-in-up delay-200">I'm continuously expanding my skillset to stay at the forefront of technology. Currently, my focus areas include:</p>
+                <ul class="list-disc list-inside space-y-3 text-left max-w-sm mx-auto">
+                    <li class="animate-fade-in-up delay-300"><span class="font-semibold text-slate-800">Advanced JavaScript Frameworks:</span> Diving deeper into React/Angular for front-end development.</li>
+                    <li class="animate-fade-in-up delay-400"><span class="font-semibold text-slate-800">Cloud Computing Fundamentals:</span> Exploring AWS/Azure services for scalable application deployment.</li>
+                    <li class="animate-fade-in-up delay-500"><span class="font-semibold text-slate-800">Machine Learning Basics:</span> Understanding core concepts and libraries like TensorFlow/PyTorch.</li>
+                </ul>
+                <p class="mt-6 animate-fade-in-up delay-600">My goal is to integrate these new skills into future projects and contribute to cutting-edge solutions.</p>
+            </div>
+        </section>
+
+        <section id="languages" class="container mx-auto p-8 py-20 bg-gray-50 rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">Languages</h2>
+            <div class="max-w-xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-scale-in delay-200">
+                    <h3 class="text-xl font-semibold text-slate-800">English</h3>
+                    <p class="text-gray-700">Intermediate</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-scale-in delay-300">
+                    <h3 class="text-xl font-semibold text-slate-800">Gujarati</h3>
+                    <p class="text-gray-700">Native</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 animate-scale-in delay-400">
+                    <h3 class="text-xl font-semibold text-slate-800">Hindi</h3>
+                    <p class="text-gray-700">Intermediate</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container mx-auto p-8 py-20 bg-white rounded-lg shadow-lg my-10">
+            <h2 class="text-4xl font-bold text-center mb-12 text-sky-700 animate-fade-in-up">Get In Touch</h2>
+            <div class="max-w-2xl mx-auto text-center">
+                <p class="text-lg mb-8 text-gray-700 animate-fade-in-up delay-200">I'm actively seeking an internship opportunity to apply my skills and grow. Feel free to connect!</p>
+                <div class="flex flex-wrap justify-center gap-6 mb-8">
+                    <a href="tel:+916355276777" class="flex items-center space-x-3 bg-sky-100 text-sky-800 hover:bg-sky-200 px-6 py-3 rounded-full text-lg font-semibold transition-colors duration-200 animate-fade-in-up delay-300">
+                        <i class="fas fa-phone-alt"></i> <span>+916355276777</span>
+                    </a>
+                    <a href="mailto:prerakrathod36@gmail.com" class="flex items-center space-x-3 bg-sky-100 text-sky-800 hover:bg-sky-200 px-6 py-3 rounded-full text-lg font-semibold transition-colors duration-200 animate-fade-in-up delay-400">
+                        <i class="fas fa-envelope"></i> <span>prerakrathod36@gmail.com</span>
+                    </a>
+                    <a href="https://in.linkedin.com/in/prerakkumar-rathod-b55a77304" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-3 bg-sky-100 text-sky-800 hover:bg-sky-200 px-6 py-3 rounded-full text-lg font-semibold transition-colors duration-200 animate-fade-in-up delay-500">
+                        <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
+                    </a>
+                    <a href="uploaded:PrerakkumarPrakashbhaiRathodResume.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-3 bg-sky-600 text-white hover:bg-sky-700 px-6 py-3 rounded-full text-lg font-semibold transition-colors duration-200 animate-fade-in-up delay-600">
+                        <i class="fas fa-download"></i> <span>Download Resume</span>
+                    </a>
+                </div>
+                <p class="text-md text-gray-600 animate-fade-in-up delay-700">Location: Surat, Gujarat, India</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-6 mt-10">
+        <div class="max-w-7xl mx-auto">
+            <p>&copy; 2025 Prerakkumar Rathod. All rights reserved.</p>
+            <p class="text-sm mt-2">Powered by Enhancv (original content basis) and designed with passion.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Navbar Elements ---
+        const mainNavbar = document.getElementById('main-navbar');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
+        
+        const desktopNavLinksContainer = document.getElementById('desktop-nav-links');
+        const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+        const allNavLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+
+        const mobileSkillsButton = document.getElementById('mobile-skills-button');
+        const mobileSkillsSubmenu = document.getElementById('mobile-skills-submenu');
+
+        // --- Navbar scroll effect: Adds shadow and blur on scroll ---
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { 
+                mainNavbar.classList.add('navbar-scrolled');
+            } else {
+                mainNavbar.classList.remove('navbar-scrolled');
+            }
+        });
+
+        // --- Mobile Menu Toggle: Handles opening/closing the mobile navigation menu ---
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            
+            iconOpen.classList.toggle('hidden');
+            iconOpen.classList.toggle('block');
+            iconClose.classList.toggle('hidden');
+            iconClose.classList.toggle('block');
+
+            if (!isExpanded) {
+                mobileMenu.classList.remove('hidden');
+                // Use requestAnimationFrame for smooth transition calculation
+                requestAnimationFrame(() => {
+                    mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+                    mobileMenu.style.opacity = '1';
+                });
+            } else {
+                mobileMenu.style.maxHeight = '0';
+                mobileMenu.style.opacity = '0';
+                // Close skills submenu if the main mobile menu is being closed
+                if (mobileSkillsButton.getAttribute('aria-expanded') === 'true') {
+                    toggleMobileSkillsSubmenu(false);
+                }
+                // Hide the menu completely after transition
+                setTimeout(() => {
+                    if (mobileMenuButton.getAttribute('aria-expanded') === 'false') {
+                           mobileMenu.classList.add('hidden');
+                    }
+                }, 300); // Matches CSS transition duration
+            }
+        });
+        
+        // --- Mobile Skills Accordion: Toggles the "Skills & More" submenu in mobile view ---
+        function toggleMobileSkillsSubmenu(expand) {
+            const buttonExpanded = mobileSkillsButton.getAttribute('aria-expanded') === 'true';
+            const shouldExpand = typeof expand === 'boolean' ? expand : !buttonExpanded;
+
+            mobileSkillsButton.setAttribute('aria-expanded', shouldExpand);
+            const arrowIcon = mobileSkillsButton.querySelector('svg');
+            if (shouldExpand) {
+                mobileSkillsSubmenu.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    mobileSkillsSubmenu.style.maxHeight = mobileSkillsSubmenu.scrollHeight + 'px';
+                    mobileSkillsSubmenu.style.opacity = '1';
+                });
+                if(arrowIcon) arrowIcon.style.transform = 'rotate(180deg)';
+            } else {
+                mobileSkillsSubmenu.style.maxHeight = '0';
+                mobileSkillsSubmenu.style.opacity = '0';
+                setTimeout(() => {
+                       if (mobileSkillsButton.getAttribute('aria-expanded') === 'false') {
+                            mobileSkillsSubmenu.classList.add('hidden');
+                       }
+                }, 300); 
+                if(arrowIcon) arrowIcon.style.transform = 'rotate(0deg)';
+            }
+            // Adjust main mobile menu height if it's open to accommodate submenu changes
+            if (mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                    requestAnimationFrame(() => { 
+                        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+                    });
+            }
+        }
+
+        mobileSkillsButton.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent main menu from closing if clicking the skills button
+            toggleMobileSkillsSubmenu();
+        });
+
+
+        // --- Active Link Styling: Highlights the current section in the navigation ---
+        function setActiveLink(activeLink) {
+            // Remove active class from all desktop links
+            desktopNavLinksContainer.querySelectorAll('.nav-link, .nav-link-skills').forEach(link => {
+                link.classList.remove('nav-link-active');
+            });
+            // Remove active class from all mobile links
+            mobileNavLinksContainer.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.classList.remove('mobile-nav-link-active');
+            });
+
+            if (activeLink) {
+                // Apply active class to desktop link
+                const desktopTarget = desktopNavLinksContainer.querySelector(`.nav-link[href="${activeLink.getAttribute('href')}"]`) || 
+                                     (activeLink.closest('#mobile-skills-submenu') ? desktopNavLinksContainer.querySelector('.nav-link-skills') : null);
+                if (desktopTarget) {
+                    desktopTarget.classList.add('nav-link-active');
+                }
+                // Apply active class to mobile link
+                const mobileTarget = mobileNavLinksContainer.querySelector(`.mobile-nav-link[href="${activeLink.getAttribute('href')}"]`);
+                if (mobileTarget) {
+                       mobileTarget.classList.add('mobile-nav-link-active');
+                       // If a sub-item of skills is active, also mark the parent skills button as active
+                       if (activeLink.closest('#mobile-skills-submenu')) {
+                           mobileSkillsButton.classList.add('mobile-nav-link-active');
+                       }
+                }
+            }
+        }
+        
+        // Event listener for all navigation links to update active state on click
+        allNavLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                setActiveLink(this);
+
+                // Close mobile menu if a link (not the skills accordion button) is clicked
+                if (this.closest('#mobile-menu') && this.id !== 'mobile-skills-button') {
+                    if (mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                        mobileMenuButton.click(); 
+                    }
+                }
+            });
+        });
+
+        // --- ScrollSpy for Active Link Highlighting: Updates active link based on scroll position ---
+        const sections = document.querySelectorAll('section[id]'); 
+        
+        function updateActiveLinkOnScroll() {
+            let currentSectionId = '';
+            // Determine active section based on scroll position
+            // Special handling for hero section at the very top
+            if (window.pageYOffset < sections[0].offsetTop + sections[0].clientHeight / 2 - mainNavbar.clientHeight) {
+                currentSectionId = 'hero';
+            } else {
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    const scrollOffset = mainNavbar.clientHeight + 20; // Navbar height + buffer
+                    if (window.pageYOffset >= sectionTop - scrollOffset && window.pageYOffset < sectionTop + sectionHeight - scrollOffset) {
+                        currentSectionId = section.getAttribute('id');
+                    }
+                });
+            }
+
+            if (currentSectionId) {
+                const activeNavLink = document.querySelector(`.nav-link[href="#${currentSectionId}"], .mobile-nav-link[href="#${currentSectionId}"]`);
+                setActiveLink(activeNavLink);
+
+                // If the active section is part of the "Skills & More" group, expand the mobile submenu
+                if (['expertise', 'skills', 'education', 'languages', 'testimonials', 'learning-goals'].includes(currentSectionId) && mobileSkillsButton.getAttribute('aria-expanded') === 'false') {
+                    if (mobileMenuButton.getAttribute('aria-expanded') === 'true') { 
+                            toggleMobileSkillsSubmenu(true);
+                    }
+                }
+
+            } else if (window.pageYOffset < sections[0].offsetTop - (mainNavbar.clientHeight + 20)) {
+                    // If scrolled above the first section, highlight Home/Hero
+                    const heroLink = document.querySelector('.nav-link[href="#hero"], .mobile-nav-link[href="#hero"]');
+                    setActiveLink(heroLink);
+            }
+        }
+        
+        // Initial call on page load and attach scroll listener
+        document.addEventListener('DOMContentLoaded', () => {
+            updateActiveLinkOnScroll(); 
+            // Set initial state for skills accordion arrow
+            if (mobileSkillsButton.getAttribute('aria-expanded') === 'true') {
+                mobileSkillsButton.querySelector('svg').style.transform = 'rotate(180deg)';
+            }
+        });
+
+        window.addEventListener('scroll', updateActiveLinkOnScroll);
+
+        // --- Optional: Close mobile menu if clicked outside of navbar ---
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = mainNavbar.contains(event.target);
+            const isMenuOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+
+            if (isMenuOpen && !isClickInsideNav) {
+                mobileMenuButton.click(); 
+            }
+        });
+
+        // --- Optional: Close mobile menu on window resize if screen becomes desktop size ---
+        window.addEventListener('resize', () => {
+            const isMenuOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            if (window.innerWidth >= 768 && isMenuOpen) { 
+                mobileMenuButton.click(); 
+            }
+        });
+
+
+        // --- Scroll Animation (Intersection Observer): Adds 'is-visible' class when element enters viewport ---
+        const animateElements = document.querySelectorAll('.animate-fade-in-up, .animate-scale-in, .animate-slide-in-left, .animate-slide-in-right');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Stop observing once visible if animation should only play once
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, {
+            root: null, // viewport as the root
+            threshold: 0.1, // 10% of target visible to trigger
+            rootMargin: "0px"
+        });
+
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // --- Typing Effect for Hero Text ---
+        const typingTextElement = document.getElementById('typing-text');
+        const phrases = ["An Aspiring Computer Engineer", "A Problem Solver", "A Web Developer", "A Prompt Engineer"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100; // ms per character
+
+        function typeWriter() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                typingTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                // Pause at end of phrase
+                typingSpeed = 1500; 
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typingSpeed = 100; // Reset typing speed
+            } else {
+                typingSpeed = isDeleting ? 50 : 100; // Faster deleting
+            }
+
+            setTimeout(typeWriter, typingSpeed);
+        }
+
+        // Start the typing effect when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            typeWriter(); // Ensure this is called after the DOM is ready
+        });
+    </script>
+
+</body>
+</html>
